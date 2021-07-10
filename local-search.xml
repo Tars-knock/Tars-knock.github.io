@@ -4,6 +4,44 @@
   
   
   <entry>
+    <title>深度优先搜索</title>
+    <link href="/20210604e9a6/"/>
+    <url>/20210604e9a6/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>二分查找(旋转数组的最小值)</title>
+    <link href="/202106044658/"/>
+    <url>/202106044658/</url>
+    
+    <content type="html"><![CDATA[<h1 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h1><p>二分查找是一种应用了分治思想的查找算法，<em>基本思想十分简单，只是对于一些特殊问题有一些小点需要注意</em>，将在后面例题中介绍。</p><h2 id="应用范围"><a href="#应用范围" class="headerlink" title="应用范围"></a>应用范围</h2><p>在<strong>顺序存储</strong>的数据集中查找某个目标值</p><blockquote><p>顺序存储可以是升序降序，一些特殊情况甚至可以是部分有序（比如即将介绍的旋转数组问题）</p></blockquote><h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><p>此处以升序的数据集作为例子，将数据集中间位置的值与目标值进行比较，如果比目标值大则将尾指针移动至中间位置，对于头尾指针之间的数据继续进行二分查找；如果中间位置的值比目标值小则将头指针移动至数据集中间。时间复杂度可以做到$O(n) = log_2n$。</p><h2 id="例题：旋转数组问题"><a href="#例题：旋转数组问题" class="headerlink" title="例题：旋转数组问题"></a>例题：旋转数组问题</h2><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个递增排序的数组的一个旋转，输出旋转数组的最小元素。例如，数组 [3,4,5,1,2] 为 [1,2,3,4,5] 的一个旋转，该数组的最小值为1。  </p><p>示例 1：</p><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">输入：<span class="hljs-string">[3,4,5,1,2]</span><br>输出：<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure><p>示例 2：</p><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">输入：<span class="hljs-string">[2,2,2,0,1]</span><br>输出：<span class="hljs-number">0</span><br></code></pre></td></tr></table></figure><p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof">https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p><h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>这个数组即前面提到的“部分有序”，是升序 但又不完全是，由于需要查找的元素所处位置的特殊性而且以查找元素为分界线前后元素均有序，所以可以使用二分查找进行解题。</p><h3 id="上代码"><a href="#上代码" class="headerlink" title="上代码"></a>上代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minArray</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] numbers)</span> </span>&#123;<br>        <span class="hljs-keyword">int</span> i,j,m;<br>        j = numbers.length-<span class="hljs-number">1</span>;<br>        i = <span class="hljs-number">0</span>;<br>        m = (i+j)/<span class="hljs-number">2</span>;<br>        <span class="hljs-keyword">while</span>(i!=j)&#123;<br>            <span class="hljs-keyword">if</span>(numbers[m]&lt;numbers[j])&#123;<br>               j = m;<br>               m = (i+j)/<span class="hljs-number">2</span>;<br>            &#125;<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(numbers[m]&gt;numbers[j])&#123;<br>                i = m+<span class="hljs-number">1</span>;<br>                m = (i+j)/<span class="hljs-number">2</span>;<br>            &#125;<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(numbers[m] == numbers[j])&#123;<br>                j = j-<span class="hljs-number">1</span>;<br>                m = (i+j)/<span class="hljs-number">2</span>;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> numbers[i];<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><h3 id="一个小点"><a href="#一个小点" class="headerlink" title="一个小点"></a>一个小点</h3><p>这个题解前面大部分就是基本的二分查找，但是：在一些特殊情况下，如本题的</p><p>第16行处 遇到重复值的情况如何处理:</p><ol><li><p><strong>当 x&lt;jx &lt; jx&lt;j 时：</strong> 易得执行 j=j−1j = j - 1j=j−1 后，旋转点 xxx 仍在区间 [i,j][i, j][i,j] 内。</p></li><li><p><strong>当 x=jx = jx=j 时：</strong> 执行 j=j−1j = j - 1j=j−1 后越过（丢失）了旋转点 xxx ，但最终返回的元素值 nums[i]nums[i]nums[i] 仍等于旋转点值 nums[x]nums[x]nums[x] 。</p></li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>算法</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>查找</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>能看懂手语的机器狗 展示视频</title>
     <link href="/20210527193c/"/>
     <url>/20210527193c/</url>
